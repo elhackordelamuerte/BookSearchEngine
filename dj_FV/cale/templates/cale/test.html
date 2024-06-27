@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+    
+      <div class="card">
+          {% if user.is_authenticated %}
+          <p>
+            Connecté sous {{user.username}} | 
+            <a href="{%url 'accounts:logout' %}">Deconnexion</a>
+          </p>
+    
+          {% else %}
+            <p>
+              <a href="{%url 'accounts:login' %}">Connexion</a>
+              <a href="{%url 'accounts:register' %}">Inscription</a>
+            </p>
+          {% endif %}
+          
+          <div class="card-header">
+            <h1 class="text-center">Bienvenue sur Cale - Page de test !</h1>
+          </div>
+          <div class="card-body">  
+            <p>
+              <a href="{% url 'cale:ajouter_livre' %}">[+] AJOUTER UN LIVRE </a>
+              <a href="{% url 'cale:ajouter_auteur' %}">[+] AJOUTER UN AUTEUR</a>
+              <input class="form-control" id="myInput" type="text" placeholder="Search..">
+              <br>  
+            </p>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Auteur</th>
+                </tr>
+              </thead>
+              <tbody id="myTable">
+              {% for livre in livres %}
+              <tr>
+                <td><a href="{% url 'cale:show' livre.id %}"> {{ livre.titre }} </a></td>
+                <td>{{ livre.auteur.nom }} </a></td>
+        
+                <div class="float-end">
+                  <td><a href="{% url 'cale:edit_livre' livre.id %}"  class="btn btn-sm btn-warning">Modifier</a></td>    
+                  <td><a href="{% url 'cale:delete_book' livre.id %}" class="btn btn-sm btn-danger">Supprimer</a></td>
+                </div>
+              </tr>
+              {% endfor %}
+            </tbody>
+            </table>
+          </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    {% endblock  %}
+
+
+    </html>
